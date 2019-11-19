@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,8 @@ import { LoadingController } from '@ionic/angular';
 export class LoadingService {
   loading: any;
   constructor(
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertController: AlertController
   ) { }
   async showLoader(message: string) {
     this.loading = await this.loadingController.create({
@@ -17,5 +18,13 @@ export class LoadingService {
   }
   async hideLoader() {
     await this.loading.dismiss();
+  }
+  async showAlert(header: string, message: string){
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

@@ -16,6 +16,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuardService } from './services/auth-guard.service';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -38,6 +39,7 @@ firebase.initializeApp(environment.firebaseConfig);
       StatusBar,
       UserService,
       SplashScreen,
+      AuthGuardService,
       FirebaseAuthenticationService,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ],

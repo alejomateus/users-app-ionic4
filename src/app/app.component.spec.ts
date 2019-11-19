@@ -1,11 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { AppComponent } from './app.component';
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
+import { UrlSerializer } from '@angular/router';
 
 fdescribe('AppComponent', () => {
 
@@ -21,9 +21,12 @@ fdescribe('AppComponent', () => {
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
+        Location,
+        UrlSerializer,
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
-        { provide: Platform, useValue: platformSpy },
+        { provide: Platform, useValue: platformSpy }
       ],
     }).compileComponents();
   }));

@@ -21,9 +21,9 @@ export class DashboardPage implements OnInit {
   dataUserEdit: User;
   validationMessages: UserFormValidationMessages;
   constructor(private userService: UserService,
-              private loadingService: LoadingService,
-              private alertController: AlertController,
-              private firebaseService: FirebaseService) { }
+    private loadingService: LoadingService,
+    private alertController: AlertController,
+    private firebaseService: FirebaseService) { }
 
   ngOnInit() {
     this.loadingService.showLoader('Load Data...');
@@ -106,13 +106,15 @@ export class DashboardPage implements OnInit {
   createUser(user: User): void {
     this.loadingService.showLoader('Creating user...');
     this.userService.postUser(user).subscribe((res) => {
-      this.firebaseService.createUser(user).then(resp => {
+      this.firebaseService.createUser(user).then((resp: any) => {
+          this.loadingService.showAlert('', resp.message);
         this.getUsers();
       })
         .catch(error => {
           console.log(error);
         });
     }, (error) => {
+      this.loadingService.showAlert('Error', error.message);
       console.log(error);
     });
   }
@@ -147,26 +149,30 @@ export class DashboardPage implements OnInit {
   updateUser(user: User): void {
     this.loadingService.showLoader('Updating user...');
     this.userService.putUser(user, this.dataUserEdit.email).subscribe((res) => {
-      this.firebaseService.updateUser(user, this.dataUserEdit.id).then(resp => {
+      this.firebaseService.updateUser(user, this.dataUserEdit.id).then((resp: any) => {
+        this.loadingService.showAlert('', resp.message);
         this.getUsers();
       })
         .catch(error => {
           console.log(error);
         });
     }, (error) => {
+      this.loadingService.showAlert('Error', error.message);
       console.log(error);
     });
   }
   deleteUser(user: User): void {
     this.loadingService.showLoader('Deleting user...');
     this.userService.deleteUser(user).subscribe((res) => {
-      this.firebaseService.deleteUser(user.id).then(resp => {
+      this.firebaseService.deleteUser(user.id).then((resp: any) => {
+        this.loadingService.showAlert('', resp.message);
         this.getUsers();
       })
         .catch(error => {
           console.log(error);
         });
     }, (error) => {
+      this.loadingService.showAlert('Error', error.message);
       console.log(error);
     });
   }

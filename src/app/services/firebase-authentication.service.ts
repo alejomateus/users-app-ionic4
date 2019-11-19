@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
+import { Login } from '../login/login.page';
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +8,7 @@ import * as firebase from 'firebase/app';
 export class FirebaseAuthenticationService {
   constructor(
   ) { }
-  registerUser(value) {
-    return new Promise<any>((resolve, reject) => {
-      firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-        .then(
-          res => resolve(res),
-          err => reject(err));
-    });
-  }
-
-  loginUser(value) {
+  loginUser(value: Login) {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
         .then(
@@ -38,7 +30,6 @@ export class FirebaseAuthenticationService {
       }
     });
   }
-
   userDetails() {
     return firebase.auth().currentUser;
   }

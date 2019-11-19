@@ -47,27 +47,23 @@ export class LoginPage implements OnInit {
     };
   }
   async loginUser(value: Login) {
-    this.loadingService.showLoader('Validate your credentials...');
+    await this.loadingService.showLoader('Validate your credentials...');
     await this.authService.loginUser(value)
       .then(res => {
         console.log(res);
         this.errorMessage = '';
-        this.navCtrl.navigateForward('/dashboard');
         this.loadingService.hideLoader();
+        console.log(this.authService.userDetails() );
+        this.navCtrl.navigateForward('/dashboard');
       }, async (err) => {
         this.loadingService.hideLoader();
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: 'Incorrect User/Password',
-          buttons: ['OK']
-        });
-        await alert.present();
+        this.loadingService.showAlert('Error', 'Incorrect User/Password')
         this.errorMessage = err.message;
       });
   }
 
   goToRegisterPage() {
-    this.navCtrl.navigateForward('/register');
+    this.navCtrl.navigateRoot('/register');
   }
 }
 export interface Login {
