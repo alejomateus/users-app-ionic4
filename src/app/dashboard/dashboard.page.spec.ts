@@ -15,11 +15,11 @@ fdescribe('DashboardPage', () => {
   let fixture: ComponentFixture<DashboardPage>;
   const FirestoreStub = {
     collection: (name: string) => ({
-      doc: (_id: string) => ({
+      doc: (id: string) => ({
         valueChanges: () => new BehaviorSubject({ foo: 'bar' }),
-        set: (_d: any) => new Promise((resolve, _reject) => resolve()),
+        set: (d: any) => new Promise((resolve, reject) => resolve()),
       }),
-      snapshotChanges:()=> new Observable()
+      snapshotChanges: () => new Observable()
     }),
   };
   beforeEach(async(() => {

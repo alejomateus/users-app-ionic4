@@ -115,6 +115,11 @@
         Actions
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="users === undefined || !users || users.length === 0 ">
+      <ion-col size="12">
+        There are currently no existing users
+      </ion-col>
+    </ion-row>
     <ion-row *ngFor="let user of users">
       <ion-col size="2">
         {{user.first_name}}

@@ -6,11 +6,11 @@ import { FirebaseService } from './firebase.service';
 fdescribe('FirebaseService', () => {
   const FirestoreStub = {
     collection: (name: string) => ({
-      doc: (_id: string) => ({
+      doc: (id: string) => ({
         valueChanges: () => new BehaviorSubject({ foo: 'bar' }),
-        set: (_d: any) => new Promise((resolve, _reject) => resolve()),
-        snapshotChanges:()=>{
-          return null
+        set: (d: any) => new Promise((resolve, reject) => resolve()),
+        snapshotChanges: () => {
+          return null;
         }
       }),
 

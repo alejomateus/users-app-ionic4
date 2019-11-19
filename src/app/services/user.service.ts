@@ -16,7 +16,7 @@ export class UserService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
-    }
+    };
   }
   getUsers(): Observable<any> {
     return this.http.get(`${environment.urlRestAPI}users`, this.httpOptions);

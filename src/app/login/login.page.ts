@@ -9,7 +9,7 @@ import { LoadingService } from '../services/loading.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss','./../app.component.scss'],
+  styleUrls: ['./login.page.scss', './../app.component.scss'],
 })
 
 export class LoginPage implements OnInit {

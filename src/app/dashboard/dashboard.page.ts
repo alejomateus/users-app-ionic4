@@ -19,18 +19,18 @@ export class DashboardPage implements OnInit {
   formUser: FormGroup;
   action: string;
   dataUserEdit: User;
-  validationMessages: userFormValidationMessages;
+  validationMessages: UserFormValidationMessages;
   constructor(private userService: UserService,
-    private loadingService: LoadingService,
-    private alertController: AlertController,
-    private firebaseService: FirebaseService) { }
+              private loadingService: LoadingService,
+              private alertController: AlertController,
+              private firebaseService: FirebaseService) { }
 
   ngOnInit() {
     this.loadingService.showLoader('Load Data...');
     this.initForm();
     this.getUsers();
   }
-  doRefresh(event:any) {
+  doRefresh(event: any) {
     setTimeout(() => {
       this.getUsers();
       event.target.complete();
@@ -41,11 +41,11 @@ export class DashboardPage implements OnInit {
       this.users = resp.map((register: any) => {
         return {
           id: register.payload.doc.id,
-          first_name: register.payload.doc.data()['first_name'],
-          last_name: register.payload.doc.data()['last_name'],
-          email: register.payload.doc.data()['email'],
-          tel: register.payload.doc.data()['tel'],
-          date_of_birth: register.payload.doc.data()['date_of_birth']
+          first_name: register.payload.doc.data().first_name,
+          last_name: register.payload.doc.data().last_name,
+          email: register.payload.doc.data().email,
+          tel: register.payload.doc.data().tel,
+          date_of_birth: register.payload.doc.data().date_of_birth
         };
       });
       this.closeForm();
@@ -53,13 +53,11 @@ export class DashboardPage implements OnInit {
     }, (error) => {
       console.log(error);
       this.userService.getUsers().subscribe((res) => {
-        debugger;
-        console.log(res.data);
         this.users = res.data;
-      }, (error) => {
-        console.log(error);
-      })
-    })
+      }, (err) => {
+        console.log(err);
+      });
+    });
   }
   initForm(): void {
     this.formUser = new FormGroup({
@@ -116,7 +114,7 @@ export class DashboardPage implements OnInit {
         });
     }, (error) => {
       console.log(error);
-    })
+    });
   }
   actionForm(user: User): void {
     if (this.action === 'edit') {
@@ -126,18 +124,18 @@ export class DashboardPage implements OnInit {
     }
   }
   editUser(user: User): void {
-    this.formUser.controls["first_name"].setValue(user.first_name);
-    this.formUser.controls["last_name"].setValue(user.last_name);
-    this.formUser.controls["email"].setValue(user.email);
-    this.formUser.controls["tel"].setValue(user.tel);
-    this.formUser.controls["date_of_birth"].setValue(user.date_of_birth);
+    this.formUser.controls.first_name.setValue(user.first_name);
+    this.formUser.controls.last_name.setValue(user.last_name);
+    this.formUser.controls.email.setValue(user.email);
+    this.formUser.controls.tel.setValue(user.tel);
+    this.formUser.controls.date_of_birth.setValue(user.date_of_birth);
     this.dataUserEdit = user;
     this.action = 'edit';
   }
   clearForm() {
     this.formUser.reset();
   }
-  closeForm(){
+  closeForm() {
     this.clearForm();
     this.action = '';
   }
@@ -157,7 +155,7 @@ export class DashboardPage implements OnInit {
         });
     }, (error) => {
       console.log(error);
-    })
+    });
   }
   deleteUser(user: User): void {
     this.loadingService.showLoader('Deleting user...');
@@ -170,7 +168,7 @@ export class DashboardPage implements OnInit {
         });
     }, (error) => {
       console.log(error);
-    })
+    });
   }
   async presentAlertConfirmDeleteUser(user: User) {
     const alert = await this.alertController.create({
@@ -196,7 +194,7 @@ export class DashboardPage implements OnInit {
   }
 }
 
-export interface userFormValidationMessages {
+export interface UserFormValidationMessages {
   first_name: Array<ValidationMessages>;
   last_name: Array<ValidationMessages>;
   email: Array<ValidationMessages>;

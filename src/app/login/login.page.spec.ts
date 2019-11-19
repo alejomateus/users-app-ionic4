@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Location, LocationStrategy, PathLocationStrategy } from "@angular/common";
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { LoginPage } from './login.page';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UrlSerializer } from '@angular/router';
@@ -15,7 +15,7 @@ fdescribe('LoginPage', () => {
       declarations: [LoginPage],
       imports: [ReactiveFormsModule, IonicModule ],
       providers: [
-        Location, 
+        Location,
         UrlSerializer,
         { provide: LocationStrategy, useClass: PathLocationStrategy },
       ],
