@@ -1,0 +1,144 @@
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-row class="ion-padding">
+    <ion-col size="2">
+    </ion-col>
+    <ion-col size="8">
+      <img src="assets/icon_intellibpo.png">
+    </ion-col>
+    <ion-col size="2">
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-text-center" class="ion-padding-top" *ngIf="action !='create'">
+    <ion-col size="2">
+    </ion-col>
+    <ion-col size="8">
+      <ion-button color="success" class="success-btn" type="submit" (click)="activateFormCreateUser()">Create User
+      </ion-button>
+    </ion-col>
+    <ion-col size="2">
+    </ion-col>
+  </ion-row>
+  <form *ngIf="action" class="form" [formGroup]="formUser" (ngSubmit)="actionForm(formUser.value)" class="ion-padding">
+    <ion-item>
+      <ion-label position="floating" color="primary">First Name</ion-label>
+      <ion-input type="text" formControlName="first_name"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validationMessages.first_name">
+        <div class="error-message"
+          *ngIf="formUser.get('first_name').hasError(validation.type) && (formUser.get('first_name').dirty || formUser.get('first_name').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Last Name</ion-label>
+      <ion-input type="text" formControlName="last_name" class="form-control" required></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validationMessages.last_name">
+        <div class="error-message"
+          *ngIf="formUser.get('last_name').hasError(validation.type) && (formUser.get('last_name').dirty || formUser.get('last_name').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Email</ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validationMessages.email">
+        <div class="error-message"
+          *ngIf="formUser.get('email').hasError(validation.type) && (formUser.get('email').dirty || formUser.get('email').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Phone</ion-label>
+      <ion-input type="tel" formControlName="tel" class="form-control" required></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validationMessages.tel">
+        <div class="error-message"
+          *ngIf="formUser.get('tel').hasError(validation.type) && (formUser.get('tel').dirty || formUser.get('tel').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label>Date of Birth</ion-label>
+      <ion-datetime id="date" displayFormat="DD-MM-YYYY" formControlName="date_of_birth" min="1900-01-01"
+        max="2019-01-01">
+      </ion-datetime>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validationMessages.date_of_birth">
+        <div class="error-message"
+          *ngIf="formUser.get('date_of_birth').hasError(validation.type) && (formUser.get('date_of_birth').dirty || formUser.get('date_of_birth').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <ion-row class="ion-text-center" class="ion-padding-top">
+      <ion-col size="6">
+        <ion-button class="success-btn" type="submit" [disabled]="!formUser.valid">{{action}}</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button class="success-btn" color="dark" type="button" (click)="closeForm()">Close Form</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+  <ion-title class="ion-text-center ion-padding-top">User Table</ion-title>
+  <ion-grid class="ion-padding">
+    <ion-row class="header">
+      <ion-col size="2">
+        First Name
+      </ion-col>
+      <ion-col size="2">
+        Last Name
+      </ion-col>
+      <ion-col size="2">
+        Email
+      </ion-col>
+      <ion-col size="2">
+        Phone
+      </ion-col>
+      <ion-col size="2">
+        Date of Birth
+      </ion-col>
+      <ion-col size="2">
+        Actions
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let user of users">
+      <ion-col size="2">
+        {{user.first_name}}
+      </ion-col>
+      <ion-col size="2">
+        {{user.last_name}}
+      </ion-col>
+      <ion-col size="2">
+        {{user.email}}
+      </ion-col>
+      <ion-col size="2">
+        {{user.tel}}
+      </ion-col>
+      <ion-col size="2">
+        {{user.date_of_birth | date: 'dd-MM-yyyy'}}
+      </ion-col>
+      <ion-col size="2">
+        <ion-button color="primary" size="small" (click)="editUser(user)">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" size="small" (click)="presentAlertConfirmDeleteUser(user)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
